@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState,useContext, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   ComposableMap,
@@ -15,104 +15,38 @@ import {useRouter} from 'next/router'
 import { inflate } from "zlib";
 import { MyC } from "./MyContext";
 
+
 type WorldMapProps = {
-    mapShow: boolean;
-    setMapShow: (state:boolean)=>void;
+    mapShow?: boolean|null;
+    setMapShow?: (state:any)=>void|boolean;
   };
 
 // const WorldMap = ({ mapShow, setShow }:WorldMapProps) => {
-const WorldMap = () => {
-
-    const {mapShow,setMapShow} = useContext(MyC)
+const WorldMap = ({mapShow,setMapShow}:WorldMapProps) => {
 
 console.log(mapShow)
     const router = useRouter();
   const geoUrl =
     "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
-    const [content, setContent] = useState("");
+    const [content, setContent] = useState<string>("");
 
-    // const aaa = (obj:object)=>{
-    //     interface obj {
-    //         id:number;
-    //     }
-    //     console.log(obj.id)
-    // }
-    // aaa({id:100})
 
-    // 문제
-    // function add(obj1:any):void {
-    //     interface Developer {
-    //         id:number;
-    //         name:string;
-    //     }
-    //     let aa:Developer;
-    //     console.log(obj1)
-    //     aa = {id:123,name:"유리"};
-    //     console.log(aa,'??')
-    //     aa = obj1;
-    //     aa = {id:234,name:"아이유"};
-    //     console.log(aa)
-    // }
-    // add({id:357,name:"아이유"})
-
-    // 해결방법 01.
-    // function add(obj1:any):void {
-    //     interface Developer {
-    //         id:number;
-    //         name:string;
-    //     }
-    //     let aa:Developer;
-    //     console.log(obj1)
-    //     aa = {id:123,name:"유리"};
-    //     console.log(aa,'??')
-    //     aa = obj1;
-    //     aa = {id:234,name:"아이유"};
-    //     console.log(aa)
-    // }
-    // add({id:357,name:"아이유"})
-
-    // 해결방법 02.
-    // function add(obj1:{id:number,name:string}):void {
-    //     interface Developer {
-    //         id:number;
-    //         name:string;
-    //     }
-    //     let aa:Developer;
-    //     console.log(obj1)
-    //     aa = {id:123,name:"유리"};
-    //     console.log(aa,'??')
-    //     aa = obj1;
-    //     aa = {id:234,name:"아이유"};
-    //     console.log(aa)
-    // }
-    // add({id:357,name:"아이유"})
-    
-    
-
-    // 이렇게 써도되고 #01
-//     const detailPage = (geo:object) => {        
-//         let useGeo: any = {};
-//         useGeo = Object.assign({},geo);
-
-//     console.log(geo)
-//     console.log(useGeo,'??')
-//     console.log(useGeo.id,'?????')
-//     //router.push(`/Country/${geo.id}`);
-//     // setShow(false);
-//   };
-
-// 이렇게 써도되고 #02
   const detailPage = (geo:any) => {
 
 console.log(geo.id)
 router.push(`/Country/${geo.id}`);
-setMapShow(false);
+setMapShow?.(true);
 };
+console.log(mapShow)
+
+
+
+
+
+
 
   return (
     <div>
-        <button onClick={()=>{setMapShow(!mapShow);console.log(mapShow,"클릭(쇼)")}}>쇼/!쇼</button>
-        <div style={{display:mapShow?"none":"block"}}>보였다</div>
     <motion.svg
       initial={{
         opacity: 0,
@@ -127,9 +61,10 @@ setMapShow(false);
       }}
       className="WorldMap"
       style={
-        mapShow
-          ? { width: "75vw", height: "85vh", transform: "translateX(5%)" }
-          : { width: "25vw", height: "30vh", transform: "translateX(5%)" }
+        !mapShow
+          ? { width: "75vw", height: "85vh",marginLeft:"100px"}
+          : { width: "75vw", height: "30vh"}
+          // : { width: "25vw", height: "30vh"}
       }
     >
       <ComposableMap
@@ -166,7 +101,7 @@ setMapShow(false);
                     onMouseEnter={(e) => {
                       // console.log(geo, 'geo?')
                       const NAME = geo.properties.name;
-                      setContent(`${NAME}`);
+                      // setContent(`${NAME}`);
                     }}
                     onMouseLeave={() => {
                       setContent("");
