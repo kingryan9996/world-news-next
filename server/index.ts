@@ -2,7 +2,7 @@
 // import, export 또는 빈 'export {}' 문을 추가하여 모듈로 만듭니다.
 
 
-import type { NextApiRequest, NextApiResponse } from 'next'
+// import type { NextApiRequest, NextApiResponse } from 'next'
 
  //var express = require('express');
 import express from 'express';
@@ -28,10 +28,10 @@ app.use(cors({
 var client_id = 'D4z2FcUbkf_ToGXADh0H';
 var client_secret = '9LjNdS8bM2';
 
-type responseGet = {
-    req: NextApiRequest,
-    res: NextApiResponse<Data>  
-}
+// type responseGet = {
+//     req: NextApiRequest,
+//     res: NextApiResponse<Data>  
+// }
 
 type Data = {
     name: string|any

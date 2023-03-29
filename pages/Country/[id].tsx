@@ -12,7 +12,7 @@ const CountryName = () => {
   let countryName = deleteData[0]?.name;
   console.log(countryName)
 
-  const [newsData,setNewsData] = useState();
+  const [newsData,setNewsData] = useState<any[]>();
 
   console.log(newsData,'호출한 뉴스데이터')
 
@@ -25,12 +25,13 @@ useEffect(()=>{
         then(res=>setNewsData(res.data.items))
 },[countryName])
 
-
+let qqq:any = newsData?.map((item:string,index:number) : any => console.log(item,index))
 
   return (
     <div>CountryName
          해당하는 날씨?
          {newsData?.[0]['title']}
+         {newsData?.map((item:any,index:number) : any => {return <span>{item.title} + {index}</span>})}
 
     </div>
   )
