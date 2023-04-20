@@ -37,9 +37,10 @@ type Data = {
     name: string|any
 }
 
-app.get('/search/shop', function (req, res) {
+app.get('/search/news', function (req, res) {
+    console.log(res,'res입')
     
-    var api_url = 'https://openapi.naver.com/v1/search/news?query=' + encodeURI(<any>req.query.query) + `&display=${req.query.display}&start=1&sort=date`;
+    var api_url = 'https://openapi.naver.com/v1/search/news?query=' + encodeURI(<any>req.query.query) + `&display=${req.query.display}` + "&start=1&sort=date";
     
     var options = {
         url: api_url,
@@ -59,7 +60,7 @@ app.get('/search/shop', function (req, res) {
 });
 
 app.listen(5000, function () {
-    console.log('http://127.0.0.1:5000/search/shop?query=검색어 app listening on port 5000!');
+    console.log('http://127.0.0.1:5000/search/news?query=검색어 app listening on port 5000!');
 });
 
 
